@@ -2,8 +2,7 @@ public class Main {
     public static void main(String[] args)
 
     {
-        Person Shachin = new Person("Shachin" , "Dhungel", "000001",
-                "Mr", 2002  );
+        Person Shachin = new Person("000001", "Shachin" , "Dhungel", "Mr.", 2002  );
 
         System.out.println(Shachin);
 

@@ -47,9 +47,6 @@ public class PersonReader {
 
                 int line = 0;
 
-                System.out.printf("|%-8s| %-10s | %10s | %-6s | %4s | %n", "ID NUMBER", "FIRST NAME","LAST NAME", "TITLE", "YOB");
-                System.out.print("-----------------------------------------------------");
-
                 while(reader.ready())
                 {
                     rec = reader.readLine();
@@ -70,8 +67,8 @@ public class PersonReader {
                         lastName  = fields[2].trim();
                         title     = fields[3].trim();
                         yob       = Integer.parseInt(fields[4].trim());
-                        System.out.printf("\n%-12s%-15s%-12s%-6s%6d", id, firstName, lastName, title, yob);
-                        person0data.add(new Person(firstName, lastName, id, title, yob));
+
+                        person0data.add(new Person(id, firstName, lastName,title, yob));
 
                     }
                     else
@@ -104,7 +101,19 @@ public class PersonReader {
 
         for (Person p:person0data)
         {
-            System.out.println(p);
+            System.out.println(p.toCSVDataRecord());
+        }
+        out.println();
+
+        for(Person p:person0data)
+        {
+           System.out.println(p.toXMLRecord());
+        }
+        out.println( );
+
+        for(Person p: person0data)
+        {
+            out.println(p.toJSONRecord());
         }
 
     }

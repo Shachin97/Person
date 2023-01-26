@@ -1,4 +1,5 @@
 import java.time.Year;
+import java.util.Objects;
 
 /**
  * @author shachin shachin777@gmail.com
@@ -12,7 +13,7 @@ public class Person
 
     private String firstName;
     private String lastName;
-    private String ID;
+    private String IDNum;
     private String title;
     private int YOB;
     static private int IDSeed = 1;
@@ -20,12 +21,31 @@ public class Person
     public static void setIDSeed(int IDSeed) {Person.IDSeed = IDSeed;}
     public  static int getIDSeed(){return IDSeed;}
 
-    public Person(String firstName, String lastName, String ID, String title, int YOB) {
+    public Person(String IDNum,String firstName, String lastName, String title, int YOB) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.ID = ID;
+        this.IDNum = IDNum;
         this.title = title;
         this.YOB = YOB;
+    }
+
+    public Person(String firstName, String lastName, int YOB) {
+        this.IDNum = this.getIDNum();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.YOB = YOB;
+    }
+
+    public String getIDNum(){return IDNum;}
+    private  String genIDNum()
+    {
+        String newID = " " + IDSeed;
+        while(newID.length() < 8)
+        {
+            newID = "0" + newID;
+        }
+        IDSeed ++;
+        return newID;
     }
 
 
@@ -45,12 +65,17 @@ public class Person
         this.lastName = lastName;
     }
 
+    public void setIDNum(String IDNum)
+    {
+        this.IDNum = IDNum;
+    }
+
     public String getID() {
-        return ID;
+        return IDNum;
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.IDNum = ID;
     }
 
     public String getTitle() {
@@ -74,7 +99,7 @@ public class Person
         return "Person{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", ID='" + ID + '\'' +
+                ", ID='" + IDNum + '\'' +
                 ", title='" + title + '\'' +
                 ", YOB=" + YOB +
                 '}';
@@ -128,10 +153,59 @@ public class Person
 
     public String toCSVDataRecord()
     {
-        return ID +", " + firstName +", " + lastName+", " + title +", " + YOB;
-
+        return IDNum +", " + firstName +", " + lastName+", " + title +", " + YOB;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return YOB == person.YOB && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(IDNum, person.IDNum) && Objects.equals(title, person.title);
+    }
+    public String toJSONRecord()
+    {
+        String retString = "";
+        char DQ = '\u0022';  // Assign the double quote char to a variable
+        retString =  "{" + DQ + "IDNum" + DQ + ":" + DQ + this.IDNum + DQ + ",";
+        retString += DQ + "firstName" + DQ + ":" + DQ + this.firstName + DQ + ",";
+        retString += " " + DQ + "lastName"  + DQ + ":" + DQ + this.lastName + DQ + ",";
+        retString += " " + DQ + "title"  + DQ + ":" + DQ + this.title + DQ + ",";
+        retString += " " + DQ + "YOB"  + DQ + ":" + this.YOB + "}";
+
+        return retString;
+    }
+    public String toXMLRecord()
+    {
+        String retString = "";
+
+        retString = "<Person>" + "<IDNum>" + this.IDNum + "</IDNum>";
+        retString += "<firstName>" + this.firstName + "</firstName>";
+        retString += "<lastName>" + this.lastName + "</lastName>";
+        retString += "<title>" + this.title + "</title>";
+        retString += "<YOB>" + this.YOB + "</YOB></Person>";
+
+        return retString;
+    }
+
+    /**
+     * XML DATA FOR PERSON
+     *<Person>
+     *     <IDNum>IDNum</IDNum>
+     *     <firstName>firstName</firstName>
+     *     <lastName>lastName</lastName>
+     *     <yob>yob</yob>
+     *     <title>title</title>
+     *</Person>
+     */
+
+
 
 
 
 }
+
+
+
+

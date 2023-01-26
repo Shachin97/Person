@@ -17,7 +17,7 @@ public class PersonGenerator {
         String firstName = "";
         String lastName = "";
         String title= "";
-        int dateOfBirth = 0;
+        int yob = 0;
         String CSV = "";
 
         File workingDirectory = new File(System.getProperty("user.dir"));
@@ -29,11 +29,11 @@ public class PersonGenerator {
            firstName = SafeInput.getNonZeroLenString(in, "Enter the first Name");
            lastName = SafeInput.getNonZeroLenString(in, "Enter the last name");
            title = SafeInput.getNonZeroLenString(in, "Enter the title ");
-           dateOfBirth = SafeInput.getRangedInt(in, "Enter the Date of Birth", 1000, 9999);
+           yob = SafeInput.getRangedInt(in, "Enter the Date of Birth", 1000, 9999);
 
 
 
-           person0data.add(new Person(ID, firstName, lastName, title, dateOfBirth));
+           person0data.add(new Person(firstName, lastName,ID, title, yob));
 
 
            done = SafeInput.getYNConfirm(in, "Are you done entering");
